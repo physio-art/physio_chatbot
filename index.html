@@ -53,11 +53,107 @@
         { name: "Neck stretches", video: "https://www.youtube.com/watch?v=OpQuywr-WXk" },
         { name: "Chin tucks", video: "https://www.youtube.com/watch?v=FhX7-aV1qDs" }
       ]
+    },
+    "shoulder injury": {
+      symptoms: [
+        "Pain or tenderness in the shoulder", 
+        "Difficulty lifting the arm", 
+        "Swelling and bruising", 
+        "Restricted range of motion"
+      ],
+      exercises: [
+        { name: "Shoulder pendulum", video: "https://www.youtube.com/watch?v=ugrHmy5kvnI" },
+        { name: "Wall push-ups", video: "https://www.youtube.com/watch?v=V6EGeaGac8w" }
+      ]
+    },
+    "ankle injury": {
+      symptoms: [
+        "Swelling", 
+        "Bruising", 
+        "Pain while walking", 
+        "Inability to stand on toes"
+      ],
+      exercises: [
+        { name: "Ankle circles", video: "https://www.youtube.com/watch?v=YbhUKnFvOw8" },
+        { name: "Towel stretch", video: "https://www.youtube.com/watch?v=4QUdqV7q9WI" }
+      ]
+    },
+    "wrist injury": {
+      symptoms: [
+        "Pain or tenderness in the wrist", 
+        "Swelling", 
+        "Weakness or instability", 
+        "Difficulty with gripping"
+      ],
+      exercises: [
+        { name: "Wrist flexor stretch", video: "https://www.youtube.com/watch?v=eqbVcmRwv6o" },
+        { name: "Wrist extensions", video: "https://www.youtube.com/watch?v=_fah1kJ9O9M" }
+      ]
+    },
+    "hip injury": {
+      symptoms: [
+        "Pain in the hip or groin area", 
+        "Limited hip mobility", 
+        "Swelling", 
+        "Pain while sitting or walking"
+      ],
+      exercises: [
+        { name: "Hip flexor stretch", video: "https://www.youtube.com/watch?v=2E6Hawov7gI" },
+        { name: "Clamshell exercise", video: "https://www.youtube.com/watch?v=F7DhKMh1MwY" }
+      ]
+    },
+    "elbow injury": {
+      symptoms: [
+        "Pain in the elbow joint", 
+        "Swelling", 
+        "Limited range of motion", 
+        "Weak grip"
+      ],
+      exercises: [
+        { name: "Elbow flexion and extension", video: "https://www.youtube.com/watch?v=wA-HNSuE_Mk" },
+        { name: "Wrist curls", video: "https://www.youtube.com/watch?v=OQod15kjzQg" }
+      ]
+    },
+    "hand injury": {
+      symptoms: [
+        "Pain in the hand or fingers", 
+        "Swelling", 
+        "Weak grip strength", 
+        "Numbness or tingling"
+      ],
+      exercises: [
+        { name: "Hand stretches", video: "https://www.youtube.com/watch?v=Ycmy6-RGk5w" },
+        { name: "Grip strengthening", video: "https://www.youtube.com/watch?v=LhXUw4t5zkQ" }
+      ]
+    },
+    "muscle injury": {
+      symptoms: [
+        "Pain in the affected muscle", 
+        "Muscle spasms", 
+        "Swelling", 
+        "Bruising"
+      ],
+      exercises: [
+        { name: "Hamstring stretch", video: "https://www.youtube.com/watch?v=9bEwR3xk4Fg" },
+        { name: "Quad stretch", video: "https://www.youtube.com/watch?v=7Dh4MSkGdLo" }
+      ]
+    },
+    "nerve injury": {
+      symptoms: [
+        "Tingling or numbness", 
+        "Sharp pain or burning sensation", 
+        "Weakness or paralysis", 
+        "Loss of reflexes"
+      ],
+      exercises: [
+        { name: "Nerve gliding exercises", video: "https://www.youtube.com/watch?v=9NOFqaC4l6o" },
+        { name: "Cervical traction", video: "https://www.youtube.com/watch?v=Vt_d9g9gO0I" }
+      ]
     }
   };
 
   function checkSymptoms() {
-    const condition = prompt("Enter your condition (e.g., knee injury, neck pain):");
+    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, wrist injury):");
     const chatBox = document.getElementById("chatBox");
 
     // Add user message
