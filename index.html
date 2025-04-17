@@ -30,7 +30,29 @@
 
 <script>
   const symptomData = {
-    "elbow joint injury": {
+   "frozen shoulder": {
+    signs: [
+      "Severe pain in the shoulder joint",
+      "Stiffness and limited range of motion",
+      "Pain at night or while lying on the affected shoulder",
+      "Shoulder muscle wasting due to disuse"
+    ],
+    symptoms: [
+      "Gradual onset of pain and stiffness",
+      "Difficulty lifting the arm overhead",
+      "Pain during shoulder movements",
+      "Limited ability to perform daily tasks (e.g., combing hair)"
+    ],
+    etiology: "Frozen shoulder occurs due to inflammation of the shoulder capsule, often after injury, surgery, or long periods of immobility. It’s more common in people with diabetes or thyroid issues.",
+    anatomy: "The shoulder joint is a ball-and-socket joint formed by the humerus (arm bone), scapula (shoulder blade), and clavicle (collarbone). The joint capsule thickens and tightens, limiting movement.",
+    treatment: "Treatment includes physiotherapy, gentle stretching exercises, anti-inflammatory medication, and in some cases, corticosteroid injections. Severe cases may require manipulation under anesthesia (MUA).",
+    exercises: [
+      { name: "Pendulum Exercise", video: "https://www.youtube.com/watch?v=kqhmUw1Ffx4" },
+      { name: "Wall Climb (Finger Walk)", video: "https://www.youtube.com/watch?v=zTOHcfdhC6Y" },
+      { name: "Towel Stretch", video: "https://www.youtube.com/watch?v=fE1VPz5kkZ0" },
+      { name: "Cross-Body Stretch", video: "https://www.youtube.com/watch?v=UnJ9ezm5eho" }
+    ]
+  } "elbow joint injury": {
     signs: [
       "Pain around the elbow joint",
       "Swelling or bruising",
@@ -256,7 +278,7 @@
   };
 
   function checkSymptoms() {
-    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, elbow joint injury, hip joint injury, hand injury, wrist injury):");
+    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, elbow joint injury, frozen shoulder,hip joint injury, hand injury, wrist injury):");
     const chatBox = document.getElementById("chatBox");
 
     // Add user message
