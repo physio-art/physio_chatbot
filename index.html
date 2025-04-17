@@ -26,13 +26,31 @@
 
 <script>
   const responses = {
-    "back pain": "Try cat-cow stretch, child's pose, and hamstring stretch.",
-  "neck pain": "Try neck rolls, chin tucks, and upper trapezius stretch.",
-  "knee pain": "Quad sets, straight leg raises, and heel slides may help.",
-  "posture": "Keep shoulders back, chin tucked, and avoid slouching.",
-  "daily tips": "Take short movement breaks every hour. Stretch and hydrate!",
-  "shoulder pain": "Try shoulder rolls, arm circles, and chest stretches.",
-  "elbow pain": "Try wrist stretches, forearm stretches, and elbow flexion/extension exercises."
+    "back pain": {
+    answer: "Try cat-cow stretch, child's pose, and hamstring stretch.",
+    symptoms: "Common symptoms include sharp pain, stiffness, and difficulty bending over.",
+    signs: "Signs may include swelling, redness, or tenderness in the lower back area."
+  },
+  "neck pain": {
+    answer: "Try neck rolls, chin tucks, and upper trapezius stretch.",
+    symptoms: "Symptoms may include soreness, stiffness, or headaches.",
+    signs: "Signs could be muscle tightness or limited neck mobility."
+  },
+  "knee pain": {
+    answer: "Quad sets, straight leg raises, and heel slides may help.",
+    symptoms: "Symptoms include swelling, pain during movement, or instability.",
+    signs: "Signs could include bruising, swelling, or a popping sound."
+  },
+  "posture": {
+    answer: "Keep shoulders back, chin tucked, and avoid slouching.",
+    symptoms: "Poor posture can lead to discomfort, fatigue, and pain in the neck and back.",
+    signs: "Signs include slouching, rounded shoulders, and forward head posture."
+  },
+  "daily tips": {
+    answer: "Take short movement breaks every hour. Stretch and hydrate!",
+    symptoms: "Not relevant, this is a general wellness tip.",
+    signs: "Not relevant."
+  }
   };
 
   function getResponse() {
