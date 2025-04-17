@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Physio Chatbot</title>
+  <title>Physio Chatbot - Free Version</title>
   <style>
     body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; background: #f4f4f4; }
     .chat-box { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; background: white; }
@@ -16,7 +16,7 @@
 
 <body>
 
-<h2>🧠 PhysioBot</h2>
+<h2>🧠 PhysioBot - Free Version</h2>
 <div class="chat-box" id="chatBox"></div>
 
 <div class="input-area">
@@ -24,91 +24,83 @@
   <button onclick="getResponse()">Send</button>
 </div>
 
+<!-- Symptom Checker Section -->
+<h3>🩺 Check Your Symptoms</h3>
+<button onclick="checkSymptoms()">Check Symptoms</button>
+
 <script>
-  const responses = {
-    "frozen shoulder": {
-    answer: "Stretching and shoulder mobility exercises are helpful.",
-    symptoms: "Pain and stiffness in the shoulder joint, especially at night.",
-    signs: "Limited shoulder movement, difficulty lifting the arm.",
-    video: "https://www.youtube.com/results?search_query=frozen+shoulder+physiotherapy"
-  },
-  "sciatica": {
-    answer: "Try sciatic nerve gliding and lower back stretches.",
-    symptoms: "Sharp pain radiating from lower back to one leg.",
-    signs: "Pain worsens when sitting or coughing.",
-    video: "https://www.youtube.com/results?search_query=sciatica+relief+exercises"
-  },
-  "plantar fasciitis": {
-    answer: "Heel stretches and ice massage can help.",
-    symptoms: "Sharp heel pain, especially in the morning.",
-    signs: "Tenderness at the base of the heel.",
-    video: "https://www.youtube.com/results?search_query=plantar+fasciitis+exercises"
-  },
-  "tennis elbow": {
-    answer: "Wrist extensor stretches and forearm strengthening help.",
-    symptoms: "Pain on outer elbow when lifting or gripping.",
-    signs: "Tenderness and pain on touching the elbow.",
-    video: "https://www.youtube.com/results?search_query=tennis+elbow+exercises"
-  },
-  "lower back pain": {
-    answer: "Cat-cow, child's pose, and hamstring stretches help.",
-    symptoms: "Aching or sharp pain in lower back.",
-    signs: "Reduced mobility, stiffness, pain on bending.",
-    video: "https://www.youtube.com/results?search_query=lower+back+pain+stretches"
-  },
-  "knee arthritis": {
-    answer: "Quad sets and low-impact leg strengthening exercises are useful.",
-    symptoms: "Stiffness, swelling, and pain in the knee joint.",
-    signs: "Joint creaking, swelling, reduced movement.",
-    video: "https://www.youtube.com/results?search_query=knee+arthritis+exercises"
-  }
+  const symptomData = {
+    "knee injury": {
+      symptoms: [
+        "Swelling", 
+        "Pain while walking", 
+        "Popping sound", 
+        "Inability to bend the knee"
+      ],
+      exercises: [
+        { name: "Quad sets", video: "https://www.youtube.com/watch?v=d4nF4BfP5w4" },
+        { name: "Straight leg raises", video: "https://www.youtube.com/watch?v=3a4qD8Umu_E" }
+      ]
+    },
+    "neck pain": {
+      symptoms: [
+        "Stiffness", 
+        "Pain while rotating neck", 
+        "Headaches", 
+        "Shoulder pain"
+      ],
+      exercises: [
+        { name: "Neck stretches", video: "https://www.youtube.com/watch?v=OpQuywr-WXk" },
+        { name: "Chin tucks", video: "https://www.youtube.com/watch?v=FhX7-aV1qDs" }
+      ]
+    }
   };
 
-  function getResponse() {
-     const input = document.getElementById("userInput").value.toLowerCase();
-  const chatBox = document.getElementById("chatBox");
+  function checkSymptoms() {
+    const condition = prompt("Enter your condition (e.g., knee injury, neck pain):");
+    const chatBox = document.getElementById("chatBox");
 
-  // Add user message
-  chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+    // Add user message
+    chatBox.innerHTML += `<p class="user">You: ${condition}</p>`;
 
-  let found = false;
-  for (const key in responses) {
-    if (input.includes(key)) {
-      const r = responses[key];
-      chatBox.innerHTML += `
-        <p class="bot">PhysioBot: ${r.answer}</p>
-        <p class="bot"><strong>Symptoms:</strong> ${r.symptoms}</p>
-        <p class="bot"><strong>Signs:</strong> ${r.signs}</p>
-        <p class="bot"><a href="${r.video}" target="_blank">▶️ Watch Exercises</a></p>
-      `;
-      found = true;
-      break;
+    if (symptomData[condition]) {
+      const symptoms = symptomData[condition].symptoms.join(", ");
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Symptoms for ${condition}: ${symptoms}</p>`;
+      
+      // Suggest exercises
+      const exercises = symptomData[condition].exercises;
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Here are some recommended exercises:</p>`;
+      exercises.forEach(exercise => {
+        chatBox.innerHTML += `<p class="bot">${exercise.name}: <a href="${exercise.video}" target="_blank">Watch Exercise</a></p>`;
+      });
+    } else {
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't recognize that condition.</p>`;
     }
+
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 
-  if (!found) {
-    chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about frozen shoulder, sciatica, or knee arthritis.</p>`;
-  }
+  // Basic Chatbot Response Logic (for other user questions)
+  function getResponse() {
+    const input = document.getElementById("userInput").value.toLowerCase();
+    const chatBox = document.getElementById("chatBox");
 
-  document.getElementById("userInput").value = "";
-  chatBox.scrollTop = chatBox.scrollHeight;
+    // Add user message
+    chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+
+    // Basic response (you can add more questions and answers here)
+    if (input.includes("back pain")) {
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Try cat-cow stretch, child's pose, and hamstring stretch.</p>`;
+    } else if (input.includes("neck pain")) {
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Try neck rolls, chin tucks, and upper trapezius stretch.</p>`;
+    } else {
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about back pain or neck pain.</p>`;
+    }
+
+    document.getElementById("userInput").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
   }
 </script>
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('Service Worker registered!', reg))
-      .catch(err => console.error('Service Worker error:', err));
-  }
-</script>
-<h3>🎥 Watch Exercise Videos by Topic:</h3>
-<ul>
-  <li><a href="https://www.youtube.com/results?search_query=back+pain+physiotherapy" target="_blank">Back Pain Relief</a></li>
-  <li><a href="https://www.youtube.com/results?search_query=neck+pain+stretches" target="_blank">Neck Pain Stretches</a></li>
-  <li><a href="https://www.youtube.com/results?search_query=knee+pain+exercises" target="_blank">Knee Strengthening</a></li>
-  <li><a href="https://www.youtube.com/results?search_query=posture+improvement" target="_blank">Posture Tips</a></li>
-  <li><a href="https://www.youtube.com/results?search_query=physiotherapy+daily+stretch" target="_blank">Daily Stretch Routine</a></li>
-</ul>
 
 </body>
 </html>
