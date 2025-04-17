@@ -65,28 +65,33 @@
   };
 
   function getResponse() {
-    const input = document.getElementById("userInput").value.toLowerCase();
-    const chatBox = document.getElementById("chatBox");
+     const input = document.getElementById("userInput").value.toLowerCase();
+  const chatBox = document.getElementById("chatBox");
 
-    // Add user message
-    chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+  // Add user message
+  chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
 
-    // Match simple keyword
-    let found = false;
-    for (const key in responses) {
-      if (input.includes(key)) {
-        chatBox.innerHTML += `<p class="bot">PhysioBot: ${responses[key]}</p>`;
-        found = true;
-        break;
-      }
+  let found = false;
+  for (const key in responses) {
+    if (input.includes(key)) {
+      const r = responses[key];
+      chatBox.innerHTML += `
+        <p class="bot">PhysioBot: ${r.answer}</p>
+        <p class="bot"><strong>Symptoms:</strong> ${r.symptoms}</p>
+        <p class="bot"><strong>Signs:</strong> ${r.signs}</p>
+        <p class="bot"><a href="${r.video}" target="_blank">▶️ Watch Exercises</a></p>
+      `;
+      found = true;
+      break;
     }
+  }
 
-    if (!found) {
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about back pain, posture, or knee pain.</p>`;
-    }
+  if (!found) {
+    chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about frozen shoulder, sciatica, or knee arthritis.</p>`;
+  }
 
-    document.getElementById("userInput").value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
+  document.getElementById("userInput").value = "";
+  chatBox.scrollTop = chatBox.scrollHeight;
   }
 </script>
 <script>
