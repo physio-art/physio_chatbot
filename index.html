@@ -1,4 +1,5 @@
-[00:00 - 01:00] Introduction
+[<link rel="manifest" href="manifest.json">
+] Introduction
 
 India’s giant news organizations are taking legal action against OpenAI, the company behind ChatGPT, over alleged unauthorized use of their content.
 
@@ -95,6 +96,13 @@ They claim OpenAI has signed licensing deals with global news outlets but has no
 
     document.getElementById("userInput").value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service Worker registered!', reg))
+      .catch(err => console.error('Service Worker error:', err));
   }
 </script>
 
