@@ -30,7 +30,110 @@
 
 <script>
   const symptomData = {
-    "knee injury": {
+    "elbow joint injury": {
+    signs: [
+      "Pain around the elbow joint",
+      "Swelling or bruising",
+      "Limited range of motion",
+      "Tenderness over the joint"
+    ],
+    symptoms: [
+      "Pain during elbow movement",
+      "Weakness in the arm",
+      "Numbness or tingling in the fingers"
+    ],
+    etiology: "Elbow injuries can result from overuse, repetitive motions, trauma, or sudden impact.",
+    anatomy: "The elbow joint connects the upper arm to the forearm, involving the humerus, radius, and ulna bones, along with ligaments and tendons.",
+    treatment: "Rest, ice, compression, elevation (R.I.C.E.), physical therapy, and in some cases, surgical intervention.",
+    exercises: [
+      { name: "Elbow Flexion and Extension", video: "https://www.youtube.com/watch?v=example1" },
+      { name: "Wrist Flexor Stretch", video: "https://www.youtube.com/watch?v=example2" }
+    ]
+  },
+
+  "hip joint injury": {
+    signs: [
+      "Pain in the hip or groin area",
+      "Difficulty moving the hip joint",
+      "Swelling or bruising",
+      "Limping or altered gait"
+    ],
+    symptoms: [
+      "Pain during hip movement",
+      "Stiffness in the hip joint",
+      "Reduced range of motion"
+    ],
+    etiology: "Hip injuries can be caused by falls, direct trauma, overuse, or degenerative conditions.",
+    anatomy: "The hip joint is a ball-and-socket joint formed by the femoral head and the acetabulum of the pelvis.",
+    treatment: "Rest, ice, compression, elevation (R.I.C.E.), physical therapy, and possibly surgical intervention.",
+    exercises: [
+      { name: "Hip Flexor Stretch", video: "https://www.youtube.com/watch?v=example3" },
+      { name: "Glute Bridge", video: "https://www.youtube.com/watch?v=example4" }
+    ]
+  },
+
+  "hand injury": {
+    signs: [
+      "Pain in the hand or fingers",
+      "Swelling or bruising",
+      "Limited finger movement",
+      "Numbness or tingling sensations"
+    ],
+    symptoms: [
+      "Pain during hand movements",
+      "Weak grip strength",
+      "Difficulty performing daily tasks"
+    ],
+    etiology: "Hand injuries can result from falls, direct trauma, repetitive motions, or overuse.",
+    anatomy: "The hand consists of bones, joints, muscles, tendons, and ligaments that facilitate complex movements.",
+    treatment: "Rest, ice, compression, elevation (R.I.C.E.), splinting, and physical therapy.",
+    exercises: [
+      { name: "Finger Stretch", video: "https://www.youtube.com/watch?v=example5" },
+      { name: "Grip Strengthening", video: "https://www.youtube.com/watch?v=example6" }
+    ]
+  },
+
+  "muscle injury": {
+    signs: [
+      "Pain in the affected muscle",
+      "Swelling or bruising",
+      "Muscle weakness",
+      "Limited range of motion"
+    ],
+    symptoms: [
+      "Pain during muscle contraction",
+      "Stiffness in the muscle",
+      "Difficulty moving the affected limb"
+    ],
+    etiology: "Muscle injuries can occur due to overuse, sudden movements, or direct trauma.",
+    anatomy: "Muscles are composed of fibers that contract to produce movement; injuries can involve strains or tears.",
+    treatment: "Rest, ice, compression, elevation (R.I.C.E.), anti-inflammatory medications, and physical therapy.",
+    exercises: [
+      { name: "Quadriceps Stretch", video: "https://www.youtube.com/watch?v=example7" },
+      { name: "Hamstring Stretch", video: "https://www.youtube.com/watch?v=example8" }
+    ]
+  },
+
+  "nerve injury": {
+    signs: [
+      "Numbness or tingling sensations",
+      "Muscle weakness",
+      "Pain radiating along the nerve path",
+      "Loss of sensation"
+    ],
+    symptoms: [
+      "Burning or shooting pain",
+      "Muscle atrophy",
+      "Difficulty with coordination"
+    ],
+    etiology: "Nerve injuries can result from compression, trauma, infections, or systemic diseases.",
+    anatomy: "Nerves transmit signals from the brain to the body; injuries can affect sensory and motor functions.",
+    treatment: "Rest, anti-inflammatory medications, physical therapy, and in severe cases, surgical intervention.",
+    exercises: [
+      { name: "Nerve Gliding Exercises", video: "https://www.youtube.com/watch?v=example9" },
+      { name: "Strengthening Exercises", video: "https://www.youtube.com/watch?v=example10" }
+    ]
+   "knee injury": {
       symptoms: [
         "Swelling", 
         "Pain while walking", 
@@ -153,7 +256,7 @@
   };
 
   function checkSymptoms() {
-    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, wrist injury):");
+    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, elbow joint injury, hip joint injury, hand injury, wrist injury):");
     const chatBox = document.getElementById("chatBox");
 
     // Add user message
