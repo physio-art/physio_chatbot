@@ -1,327 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Physio Chatbot - Free Version</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Physiotherapy Chatbot</title>
   <style>
-    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; background: #f4f4f4; }
-    .chat-box { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; background: white; }
-    .input-area { margin-top: 10px; display: flex; }
-    input { flex: 1; padding: 10px; }
-    button { padding: 10px; }
-    .user { color: blue; }
-    .bot { color: green; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      background: #f7f7f7;
+    }
+    .chatbox {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+    }
+    .response {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #e9f5e9;
+      border-left: 4px solid #4CAF50;
+    }
   </style>
 </head>
-
 <body>
+  <div class="chatbox">
+    <h2>Physiotherapy Chatbot</h2>
+    <label for="condition">Select your condition:</label>
+    <select id="condition">
+      <option value="neck">Neck Pain</option>
+      <option value="back">Back Pain</option>
+      <option value="elbow">Elbow Joint Pain</option>
+      <option value="wrist">Wrist Joint Pain</option>
+      <option value="knee">Knee Joint Pain</option>
+      <option value="hip">Hip Joint Pain</option>
+      <option value="ankle">Ankle Joint Pain</option>
+      <option value="kneeOA">Knee Osteoarthritis (OA)</option>
+      <option value="RA">Rheumatoid Arthritis (RA)</option>
+      <option value="sprain">Sprain</option>
+      <option value="strain">Strain</option>
+      <option value="nerve">Nerve Injury</option>
+      <option value="muscle">Muscle Injury</option>
+      <option value="impingement">Impingement Syndrome</option>
+    </select>
+    <br/>
+    <button onclick="getRecommendation()">Get Exercise Recommendation</button>
+    <div id="output" class="response" style="display:none;"></div>
+  </div>
 
-<h2>🧠 PhysioBot - Free Version</h2>
-<div class="chat-box" id="chatBox"></div>
+  <script>
+    const recommendations = {
+      neck: "Chin tucks, neck rotations, and upper trapezius stretches. Avoid forward head posture.",
+      back: "Pelvic tilts, cat-cow stretches, and bridging exercises. Focus on core strengthening.",
+      elbow: "Wrist extensor stretch, eccentric wrist curls, and isometric grip exercises.",
+      wrist: "Wrist circles, flexor and extensor stretches, and rubber band finger extensions.",
+      knee: "Quadriceps sets, straight leg raises, and terminal knee extensions.",
+      hip: "Hip abduction, bridges, and piriformis stretches for mobility and strength.",
+      ankle: "Ankle alphabets, resistance band plantarflexion/dorsiflexion, and calf raises.",
+      kneeOA: "Quad sets, step-ups, and stationary cycling for joint mobility and strength.",
+      RA: "Gentle range of motion, isometric strengthening, and warm water exercises.",
+      sprain: "PRICE protocol initially, then ankle circles, toe curls, and balance exercises.",
+      strain: "Gentle stretching, gradual strengthening, and proprioceptive training.",
+      nerve: "Nerve gliding techniques, posture correction, and gentle range of motion.",
+      muscle: "Rest followed by isometric strengthening and progressive loading exercises.",
+      impingement: "Pendulum swings, scapular stabilization, and rotator cuff strengthening."
+    };
 
-<div class="input-area">
-  <input type="text" id="userInput" placeholder="Ask a physio question..." />
-  <button onclick="getResponse()">Send</button>
-</div>
-
-<!-- Symptom Checker Section -->
-<h3>🩺 Check Your Symptoms</h3>
-<button onclick="checkSymptoms()">Check Symptoms</button>
-
-<script>
-  const symptomData = {
-   "frozen shoulder": {
-    signs: [
-      "Severe pain in the shoulder joint",
-      "Stiffness and limited range of motion",
-      "Pain at night or while lying on the affected shoulder",
-      "Shoulder muscle wasting due to disuse"
-    ],
-    symptoms: [
-      "Gradual onset of pain and stiffness",
-      "Difficulty lifting the arm overhead",
-      "Pain during shoulder movements",
-      "Limited ability to perform daily tasks (e.g., combing hair)"
-    ],
-    etiology: "Frozen shoulder occurs due to inflammation of the shoulder capsule, often after injury, surgery, or long periods of immobility. It’s more common in people with diabetes or thyroid issues.",
-    anatomy: "The shoulder joint is a ball-and-socket joint formed by the humerus (arm bone), scapula (shoulder blade), and clavicle (collarbone). The joint capsule thickens and tightens, limiting movement.",
-    treatment: "Treatment includes physiotherapy, gentle stretching exercises, anti-inflammatory medication, and in some cases, corticosteroid injections. Severe cases may require manipulation under anesthesia (MUA).",
-    exercises: [
-      { name: "Pendulum Exercise", video: "https://www.youtube.com/watch?v=kqhmUw1Ffx4" },
-      { name: "Wall Climb (Finger Walk)", video: "https://www.youtube.com/watch?v=zTOHcfdhC6Y" },
-      { name: "Towel Stretch", video: "https://www.youtube.com/watch?v=fE1VPz5kkZ0" },
-      { name: "Cross-Body Stretch", video: "https://www.youtube.com/watch?v=UnJ9ezm5eho" }
-    ]
-  } "elbow joint injury": {
-    signs: [
-      "Pain around the elbow joint",
-      "Swelling or bruising",
-      "Limited range of motion",
-      "Tenderness over the joint"
-    ],
-    symptoms: [
-      "Pain during elbow movement",
-      "Weakness in the arm",
-      "Numbness or tingling in the fingers"
-    ],
-    etiology: "Elbow injuries can result from overuse, repetitive motions, trauma, or sudden impact.",
-    anatomy: "The elbow joint connects the upper arm to the forearm, involving the humerus, radius, and ulna bones, along with ligaments and tendons.",
-    treatment: "Rest, ice, compression, elevation (R.I.C.E.), physical therapy, and in some cases, surgical intervention.",
-    exercises: [
-      { name: "Elbow Flexion and Extension", video: "https://www.youtube.com/watch?v=example1" },
-      { name: "Wrist Flexor Stretch", video: "https://www.youtube.com/watch?v=example2" }
-    ]
-  },
-
-  "hip joint injury": {
-    signs: [
-      "Pain in the hip or groin area",
-      "Difficulty moving the hip joint",
-      "Swelling or bruising",
-      "Limping or altered gait"
-    ],
-    symptoms: [
-      "Pain during hip movement",
-      "Stiffness in the hip joint",
-      "Reduced range of motion"
-    ],
-    etiology: "Hip injuries can be caused by falls, direct trauma, overuse, or degenerative conditions.",
-    anatomy: "The hip joint is a ball-and-socket joint formed by the femoral head and the acetabulum of the pelvis.",
-    treatment: "Rest, ice, compression, elevation (R.I.C.E.), physical therapy, and possibly surgical intervention.",
-    exercises: [
-      { name: "Hip Flexor Stretch", video: "https://www.youtube.com/watch?v=example3" },
-      { name: "Glute Bridge", video: "https://www.youtube.com/watch?v=example4" }
-    ]
-  },
-
-  "hand injury": {
-    signs: [
-      "Pain in the hand or fingers",
-      "Swelling or bruising",
-      "Limited finger movement",
-      "Numbness or tingling sensations"
-    ],
-    symptoms: [
-      "Pain during hand movements",
-      "Weak grip strength",
-      "Difficulty performing daily tasks"
-    ],
-    etiology: "Hand injuries can result from falls, direct trauma, repetitive motions, or overuse.",
-    anatomy: "The hand consists of bones, joints, muscles, tendons, and ligaments that facilitate complex movements.",
-    treatment: "Rest, ice, compression, elevation (R.I.C.E.), splinting, and physical therapy.",
-    exercises: [
-      { name: "Finger Stretch", video: "https://www.youtube.com/watch?v=example5" },
-      { name: "Grip Strengthening", video: "https://www.youtube.com/watch?v=example6" }
-    ]
-  },
-
-  "muscle injury": {
-    signs: [
-      "Pain in the affected muscle",
-      "Swelling or bruising",
-      "Muscle weakness",
-      "Limited range of motion"
-    ],
-    symptoms: [
-      "Pain during muscle contraction",
-      "Stiffness in the muscle",
-      "Difficulty moving the affected limb"
-    ],
-    etiology: "Muscle injuries can occur due to overuse, sudden movements, or direct trauma.",
-    anatomy: "Muscles are composed of fibers that contract to produce movement; injuries can involve strains or tears.",
-    treatment: "Rest, ice, compression, elevation (R.I.C.E.), anti-inflammatory medications, and physical therapy.",
-    exercises: [
-      { name: "Quadriceps Stretch", video: "https://www.youtube.com/watch?v=example7" },
-      { name: "Hamstring Stretch", video: "https://www.youtube.com/watch?v=example8" }
-    ]
-  },
-
-  "nerve injury": {
-    signs: [
-      "Numbness or tingling sensations",
-      "Muscle weakness",
-      "Pain radiating along the nerve path",
-      "Loss of sensation"
-    ],
-    symptoms: [
-      "Burning or shooting pain",
-      "Muscle atrophy",
-      "Difficulty with coordination"
-    ],
-    etiology: "Nerve injuries can result from compression, trauma, infections, or systemic diseases.",
-    anatomy: "Nerves transmit signals from the brain to the body; injuries can affect sensory and motor functions.",
-    treatment: "Rest, anti-inflammatory medications, physical therapy, and in severe cases, surgical intervention.",
-    exercises: [
-      { name: "Nerve Gliding Exercises", video: "https://www.youtube.com/watch?v=example9" },
-      { name: "Strengthening Exercises", video: "https://www.youtube.com/watch?v=example10" }
-    ]
-   "knee injury": {
-      symptoms: [
-        "Swelling", 
-        "Pain while walking", 
-        "Popping sound", 
-        "Inability to bend the knee"
-      ],
-      exercises: [
-        { name: "Quad sets", video: "https://www.youtube.com/watch?v=d4nF4BfP5w4" },
-        { name: "Straight leg raises", video: "https://www.youtube.com/watch?v=3a4qD8Umu_E" }
-      ]
-    },
-    "neck pain": {
-      symptoms: [
-        "Stiffness", 
-        "Pain while rotating neck", 
-        "Headaches", 
-        "Shoulder pain"
-      ],
-      exercises: [
-        { name: "Neck stretches", video: "https://www.youtube.com/watch?v=OpQuywr-WXk" },
-        { name: "Chin tucks", video: "https://www.youtube.com/watch?v=FhX7-aV1qDs" }
-      ]
-    },
-    "shoulder injury": {
-      symptoms: [
-        "Pain or tenderness in the shoulder", 
-        "Difficulty lifting the arm", 
-        "Swelling and bruising", 
-        "Restricted range of motion"
-      ],
-      exercises: [
-        { name: "Shoulder pendulum", video: "https://www.youtube.com/watch?v=ugrHmy5kvnI" },
-        { name: "Wall push-ups", video: "https://www.youtube.com/watch?v=V6EGeaGac8w" }
-      ]
-    },
-    "ankle injury": {
-      symptoms: [
-        "Swelling", 
-        "Bruising", 
-        "Pain while walking", 
-        "Inability to stand on toes"
-      ],
-      exercises: [
-        { name: "Ankle circles", video: "https://www.youtube.com/watch?v=YbhUKnFvOw8" },
-        { name: "Towel stretch", video: "https://www.youtube.com/watch?v=4QUdqV7q9WI" }
-      ]
-    },
-    "wrist injury": {
-      symptoms: [
-        "Pain or tenderness in the wrist", 
-        "Swelling", 
-        "Weakness or instability", 
-        "Difficulty with gripping"
-      ],
-      exercises: [
-        { name: "Wrist flexor stretch", video: "https://www.youtube.com/watch?v=eqbVcmRwv6o" },
-        { name: "Wrist extensions", video: "https://www.youtube.com/watch?v=_fah1kJ9O9M" }
-      ]
-    },
-    "hip injury": {
-      symptoms: [
-        "Pain in the hip or groin area", 
-        "Limited hip mobility", 
-        "Swelling", 
-        "Pain while sitting or walking"
-      ],
-      exercises: [
-        { name: "Hip flexor stretch", video: "https://www.youtube.com/watch?v=2E6Hawov7gI" },
-        { name: "Clamshell exercise", video: "https://www.youtube.com/watch?v=F7DhKMh1MwY" }
-      ]
-    },
-    "elbow injury": {
-      symptoms: [
-        "Pain in the elbow joint", 
-        "Swelling", 
-        "Limited range of motion", 
-        "Weak grip"
-      ],
-      exercises: [
-        { name: "Elbow flexion and extension", video: "https://www.youtube.com/watch?v=wA-HNSuE_Mk" },
-        { name: "Wrist curls", video: "https://www.youtube.com/watch?v=OQod15kjzQg" }
-      ]
-    },
-    "hand injury": {
-      symptoms: [
-        "Pain in the hand or fingers", 
-        "Swelling", 
-        "Weak grip strength", 
-        "Numbness or tingling"
-      ],
-      exercises: [
-        { name: "Hand stretches", video: "https://www.youtube.com/watch?v=Ycmy6-RGk5w" },
-        { name: "Grip strengthening", video: "https://www.youtube.com/watch?v=LhXUw4t5zkQ" }
-      ]
-    },
-    "muscle injury": {
-      symptoms: [
-        "Pain in the affected muscle", 
-        "Muscle spasms", 
-        "Swelling", 
-        "Bruising"
-      ],
-      exercises: [
-        { name: "Hamstring stretch", video: "https://www.youtube.com/watch?v=9bEwR3xk4Fg" },
-        { name: "Quad stretch", video: "https://www.youtube.com/watch?v=7Dh4MSkGdLo" }
-      ]
-    },
-    "nerve injury": {
-      symptoms: [
-        "Tingling or numbness", 
-        "Sharp pain or burning sensation", 
-        "Weakness or paralysis", 
-        "Loss of reflexes"
-      ],
-      exercises: [
-        { name: "Nerve gliding exercises", video: "https://www.youtube.com/watch?v=9NOFqaC4l6o" },
-        { name: "Cervical traction", video: "https://www.youtube.com/watch?v=Vt_d9g9gO0I" }
-      ]
+    function getRecommendation() {
+      const condition = document.getElementById('condition').value;
+      const outputDiv = document.getElementById('output');
+      outputDiv.style.display = 'block';
+      outputDiv.textContent = recommendations[condition] || "Please select a valid condition.";
     }
-  };
-
-  function checkSymptoms() {
-    const condition = prompt("Enter your condition (e.g., knee injury, shoulder injury, elbow joint injury, frozen shoulder,hip joint injury, hand injury, wrist injury):");
-    const chatBox = document.getElementById("chatBox");
-
-    // Add user message
-    chatBox.innerHTML += `<p class="user">You: ${condition}</p>`;
-
-    if (symptomData[condition]) {
-      const symptoms = symptomData[condition].symptoms.join(", ");
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Symptoms for ${condition}: ${symptoms}</p>`;
-      
-      // Suggest exercises
-      const exercises = symptomData[condition].exercises;
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Here are some recommended exercises:</p>`;
-      exercises.forEach(exercise => {
-        chatBox.innerHTML += `<p class="bot">${exercise.name}: <a href="${exercise.video}" target="_blank">Watch Exercise</a></p>`;
-      });
-    } else {
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't recognize that condition.</p>`;
-    }
-
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  // Basic Chatbot Response Logic (for other user questions)
-  function getResponse() {
-    const input = document.getElementById("userInput").value.toLowerCase();
-    const chatBox = document.getElementById("chatBox");
-
-    // Add user message
-    chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
-
-    // Basic response (you can add more questions and answers here)
-    if (input.includes("back pain")) {
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Try cat-cow stretch, child's pose, and hamstring stretch.</p>`;
-    } else if (input.includes("neck pain")) {
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Try neck rolls, chin tucks, and upper trapezius stretch.</p>`;
-    } else {
-      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about back pain or neck pain.</p>`;
-    }
-
-    document.getElementById("userInput").value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-</script>
-
+  </script>
 </body>
 </html>
