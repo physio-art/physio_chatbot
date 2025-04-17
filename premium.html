@@ -1,1 +1,69 @@
-https://github.com/physio-art/physio_chatbot/edit/main/index.html
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physio Chatbot</title>
+  <style>
+    body { font-family: Arial; max-width: 600px; margin: auto; padding: 20px; background: #f4f4f4; }
+    .chat-box { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; background: white; }
+    .input-area { margin-top: 10px; display: flex; }
+    input { flex: 1; padding: 10px; }
+    button { padding: 10px; }
+    .user { color: blue; }
+    .bot { color: green; }
+  </style>
+</head>
+<body>
+
+<h2>🧠 PhysioBot</h2>
+<div class="chat-box" id="chatBox"></div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="Ask a physio question..." />
+  <button onclick="getResponse()">Send</button>
+</div>
+
+<script>
+  const responses = {
+    "back pain": "Try cat-cow stretch, child's pose, and hamstring stretch.",
+    "neck pain": "Try neck rolls, chin tucks, and upper trapezius stretch.",
+    "knee pain": "Quad sets, straight leg raises, and heel slides may help.",
+    "posture": "Keep shoulders back, chin tucked, and avoid slouching.",
+    "daily tips": "Take short movement breaks every hour. Stretch and hydrate!"
+  };
+
+  function getResponse() {
+    const input = document.getElementById("userInput").value.toLowerCase();
+    const chatBox = document.getElementById("chatBox");
+
+    // Add user message
+    chatBox.innerHTML += `<p class="user">You: ${input}</p>`;
+
+    // Match simple keyword
+    let found = false;
+    for (const key in responses) {
+      if (input.includes(key)) {
+        chatBox.innerHTML += `<p class="bot">PhysioBot: ${responses[key]}</p>`;
+        found = true;
+        break;
+      }
+    }
+
+    if (!found) {
+      chatBox.innerHTML += `<p class="bot">PhysioBot: Sorry, I don't understand. Try asking about back pain, posture, or knee pain.</p>`;
+    }
+
+    document.getElementById("userInput").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service Worker registered!', reg))
+      .catch(err => console.error('Service Worker error:', err));
+  }
+</script>
+
+</body>
+</html>
